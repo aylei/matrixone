@@ -372,16 +372,19 @@ func startProxyService(cfg *Config, stopper *stopper.Stopper) error {
 
 // startPythonUdfService starts the python udf service.
 func startPythonUdfService(cfg *Config, stopper *stopper.Stopper) error {
+	logutil.Info("PYTHON UDF: start python udf service")
 	if err := waitClusterCondition(cfg.HAKeeperClient, waitHAKeeperRunning); err != nil {
 		return err
 	}
 	serviceWG.Add(1)
 	return stopper.RunNamedTask("python-udf-service", func(ctx context.Context) {
 		defer serviceWG.Done()
+		logutil.Info("PYTHON UDF: new python UDF service")
 		s, err := pythonservice.NewService(cfg.PythonUdfServerConfig)
 		if err != nil {
 			panic(err)
 		}
+		logutil.Info("PYTHON UDF: try start python UDF service")
 		if err := s.Start(); err != nil {
 			panic(err)
 		}

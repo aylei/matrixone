@@ -195,6 +195,7 @@ func startPythonUdfServiceCluster(
 	stopper *stopper.Stopper,
 	shutdownC chan struct{},
 ) error {
+	logutil.Info("PYTHON UDF: start python udf service cluster")
 	if len(files) == 0 {
 		return nil
 	}

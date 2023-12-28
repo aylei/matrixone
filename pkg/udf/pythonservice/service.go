@@ -15,6 +15,7 @@
 package pythonservice
 
 import (
+	"github.com/matrixorigin/matrixone/pkg/logutil"
 	"io"
 	"os"
 	"os/exec"
@@ -46,6 +47,7 @@ func (s *service) Start() error {
 	s.mutex.Lock()
 	defer s.mutex.Unlock()
 
+	logutil.Info("PYTHON UDF: start python UDF service")
 	if s.process == nil {
 		var err error
 		var file string
@@ -80,10 +82,17 @@ func (s *service) Start() error {
 		cmd := exec.Command("python", "-u", file, "--address="+s.cfg.Address)
 		cmd.Stdout = s.log
 		cmd.Stderr = s.log
+		logutil.Infof("PYTHON UDF RUN: %s", cmd.String())
 		err = cmd.Start()
 		if err != nil {
 			return err
 		}
+		go func(cmd *exec.Cmd) {
+			if err := cmd.Wait(); err != nil {
+				panic(err)
+			}
+			logutil.Error("PYTHON UDF EXIT without error")
+		}(cmd)
 
 		s.process = cmd.Process
 	}
