@@ -24,6 +24,9 @@ type Config struct {
 	Address string `toml:"address"`
 	// Path code path
 	Path string `toml:"path"`
+
+	// python is the python interpreter path
+	Python *string `toml:"python"`
 }
 
 func (c *Config) Validate() error {

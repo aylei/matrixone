@@ -3,3 +3,5 @@ service-type = "PYTHON_UDF"
 [python-udf-server]
 address = "127.0.0.1:50051"
 path = "pkg/udf/pythonservice/pyserver"
+# by default `python` would be used as the interpretor, you may override the interpretor path here
+# python = "/usr/local/bin"

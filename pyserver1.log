@@ -1,0 +1,4 @@
+[2023-12-28 12:09:43,693] - [Server] - [INFO] - [MainThread] : python server start
+[2023-12-28 12:10:05,442] - [Server] - [INFO] - [ThreadPoolExecutor-0_0] : receive data
+[2023-12-28 12:10:05,442] - [Server] - [INFO] - [ThreadPoolExecutor-0_0] : calculating
+[2023-12-28 12:10:05,442] - [Server] - [INFO] - [ThreadPoolExecutor-0_0] : finish calculating

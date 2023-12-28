@@ -79,7 +79,11 @@ func (s *service) Start() error {
 			}
 		}()
 
-		cmd := exec.Command("python", "-u", file, "--address="+s.cfg.Address)
+		bin := "python"
+		if s.cfg.Python != nil {
+			bin = *s.cfg.Python
+		}
+		cmd := exec.Command(bin, "-u", file, "--address="+s.cfg.Address)
 		cmd.Stdout = s.log
 		cmd.Stderr = s.log
 		logutil.Infof("PYTHON UDF RUN: %s", cmd.String())
