@@ -145,6 +145,8 @@ func (s *CNState) PatchCNStore(stateLabel CNStateLabel) {
 	storeInfo.WorkState = stateLabel.State
 	if stateLabel.Labels != nil {
 		storeInfo.Labels = stateLabel.Labels
+	} else if stateLabel.ClearLabel {
+		storeInfo.Labels = nil
 	}
 	s.Stores[stateLabel.UUID] = storeInfo
 }

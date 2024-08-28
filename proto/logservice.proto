@@ -1,4 +1,4 @@
-/* 
+/*
  * Copyright 2021 Matrix Origin
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -282,8 +282,10 @@ message CNStateLabel {
   string UUID     = 1;
   // State is the CN work state.
   metadata.WorkState State = 2;
-  // Labels is the labels of the CN store.
+  // Labels is the labels of the CN store, no op if this field is empty
   map<string, metadata.LabelList> Labels = 3 [(gogoproto.nullable) = false];
+  // ClearLabel flag asks HAKeeper to clear CN labels when ClearLabel==true and Labels==nil
+  bool ClearLabel = 4;
 }
 
 message Request {
@@ -513,7 +515,7 @@ message CNStoreInfo {
 
 // CNState contains all CN details known to the HAKeeper.
 message CNState {
-  // Stores is keyed by CN store UUID. 
+  // Stores is keyed by CN store UUID.
   map<string, CNStoreInfo> Stores = 1 [(gogoproto.nullable) = false];
 }
 
@@ -662,7 +664,7 @@ message ReplicaInfo {
   string ServiceAddress = 2;
 }
 
-// ShardInfoQueryResult contains the result of the shard info query. 
+// ShardInfoQueryResult contains the result of the shard info query.
 message ShardInfoQueryResult {
   uint64 ShardID                    = 1;
   map<uint64, ReplicaInfo> Replicas = 2 [(gogoproto.nullable) = false];
